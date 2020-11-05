@@ -1,5 +1,6 @@
 import Phaser from "phaser";
 import config from "../config";
+import Card from "../objects/card";
 import background from "../../images/background.png";
 import card from "../../images/card.png";
 
@@ -13,6 +14,22 @@ export class GameScene extends Phaser.Scene {
   preload() {
     this.load.image("background", background);
     this.load.image("card", card);
+  }
+
+  create() {
+    this.createBackground();
+    this.createCards();
+  }
+
+  createBackground() {
+    const {width, height} = this.sys.game.config;
+    const bgImage = this.add.sprite(width / 2, height / 2, "background");
+  }
+
+  createCards() {
+    this.cards = [];
+    const positions = this.getCardsPositions();
+    positions.forEach(pos => this.cards.push(new Card(this, pos)));
   }
 
   getCardsPositions() {
@@ -34,15 +51,5 @@ export class GameScene extends Phaser.Scene {
       }
     }
     return positions;
-  }
-
-  create() {
-    const {width, height} = this.sys.game.config;
-    const bgImage = this.add.sprite(width / 2, height / 2, "background");
-
-    const positions = this.getCardsPositions();
-    positions.forEach(({x, y}) => {
-      this.add.sprite(x, y, "card").setOrigin(0,0);
-    })
   }
 }
