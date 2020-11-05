@@ -41,5 +41,7 @@
     "type": "git",
     "url": "git@github.com:mikiteek/webpack-boilerplate"
   },
-  "dependencies": {}
+  "dependencies": {
+    "phaser": "^3.24.1"
+  }
 }
