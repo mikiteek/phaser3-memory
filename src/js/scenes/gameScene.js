@@ -2,12 +2,12 @@ import Phaser from "phaser";
 import config from "../config";
 import Card from "../objects/card";
 import background from "../../images/background.png";
-import card from "../../images/card.png";
-import card1 from "../../images/card1.png";
-import card2 from "../../images/card2.png";
-import card3 from "../../images/card3.png";
-import card4 from "../../images/card4.png";
-import card5 from "../../images/card5.png";
+import cardImg from "../../images/card.png";
+import cardImg1 from "../../images/card1.png";
+import cardImg2 from "../../images/card2.png";
+import cardImg3 from "../../images/card3.png";
+import cardImg4 from "../../images/card4.png";
+import cardImg5 from "../../images/card5.png";
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -18,12 +18,12 @@ export class GameScene extends Phaser.Scene {
 
   preload() {
     this.load.image("background", background);
-    this.load.image("card", card);
-    this.load.image("card1", card1);
-    this.load.image("card2", card2);
-    this.load.image("card3", card3);
-    this.load.image("card4", card4);
-    this.load.image("card5", card5);
+    this.load.image("card", cardImg);
+    this.load.image("card1", cardImg1);
+    this.load.image("card2", cardImg2);
+    this.load.image("card3", cardImg3);
+    this.load.image("card4", cardImg4);
+    this.load.image("card5", cardImg5);
   }
 
   create() {
@@ -46,7 +46,13 @@ export class GameScene extends Phaser.Scene {
       for (let i = 0; i < 2; i++) {
         this.cards.push(new Card(this, value, positions.pop()));
       }
-    })
+    });
+    // handle event click
+    this.input.on("gameobjectdown", this.onCardClicked, this);
+  }
+
+  onCardClicked(pointer, card) {
+    card.open();
   }
 
   getCardsPositions() {
