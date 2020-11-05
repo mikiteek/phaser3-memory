@@ -1,0 +1,12 @@
+import {GameObjects} from "phaser";
+
+class Card extends GameObjects.Sprite {
+  constructor(scene, position) {
+    super(scene, position.x, position.y, "card");
+    this.scene = scene;
+    this.setOrigin(0, 0);
+    this.scene.add.existing(this);
+  }
+}
+
+export default Card;
