@@ -29,6 +29,7 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.createBackground();
     this.createCards();
+    this.openedCard = null;
   }
 
   createBackground() {
@@ -52,6 +53,25 @@ export class GameScene extends Phaser.Scene {
   }
 
   onCardClicked(pointer, card) {
+    if (card.opened) {
+      return false;
+    }
+    if (this.openedCard) {
+      // have opened card
+      if (this.openedCard.value === card.value) {
+        // remember card
+        this.openedCard = null;
+      }
+      else {
+        // hidden prev
+        this.openedCard.close();
+        this.openedCard = card;
+      }
+    }
+     else {
+       // do not exist opened card
+      this.openedCard = card;
+    }
     card.open();
   }
 
