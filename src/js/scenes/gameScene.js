@@ -50,7 +50,7 @@ export class GameScene extends Phaser.Scene {
 
   createBackground() {
     const {width, height} = this.sys.game.config;
-    const bgImage = this.add.sprite(width / 2, height / 2, "background");
+    const bgImage = this.add.sprite(0, 0, "background").setOrigin(0, 0);
   }
 
   createCards() {
@@ -99,8 +99,8 @@ export class GameScene extends Phaser.Scene {
     const cardWidth = cardTexture.width + 4; // with gap 4px
     const cardHeight = cardTexture.height + 4;
     // gap for centering cards
-    const offsetX = (config.width - cardWidth * config.cols) / 2;
-    const offsetY = (config.height - cardHeight * config.rows) / 2;
+    const offsetX = (config.width - cardWidth * config.cols) / 2 + cardWidth / 2;
+    const offsetY = (config.height - cardHeight * config.rows) / 2 + cardHeight / 2;
 
     for (let row = 0; row < config.rows; row++) {
       for (let col = 0; col < config.cols; col++) {

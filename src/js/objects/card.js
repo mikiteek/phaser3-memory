@@ -5,7 +5,7 @@ class Card extends GameObjects.Sprite {
     super(scene, 0, 0, "card");
     this.scene = scene;
     this.value = value;
-    this.setOrigin(0, 0);
+    // this.setOrigin(0.5, 0.5);
     this.scene.add.existing(this);
 
     // execute check for events for this object
@@ -15,11 +15,32 @@ class Card extends GameObjects.Sprite {
 
   open() {
     this.opened = true;
-    this.setTexture("card" + this.value);
+    this.flip("card" + this.value);
   }
   close() {
     this.opened = false;
     this.setTexture("card");
+  }
+  flip(texture) {
+    // for tween animation
+    this.scene.tweens.add({
+      targets: this,
+      scaleX: 0,
+      ease: "Linear",
+      duration: 150,
+      onComplete: () => {
+        this.show(texture);
+      }
+    });
+  }
+  show(texture) {
+    this.setTexture(texture);
+    this.scene.tweens.add({
+      targets: this,
+      scaleX: 1,
+      ease: "Linear",
+      duration: 150,
+    });
   }
 }
 
