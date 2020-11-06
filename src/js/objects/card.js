@@ -1,8 +1,8 @@
 import {GameObjects} from "phaser";
 
 class Card extends GameObjects.Sprite {
-  constructor(scene, value, position) {
-    super(scene, position.x, position.y, "card");
+  constructor(scene, value) {
+    super(scene, 0, 0, "card");
     this.scene = scene;
     this.value = value;
     this.setOrigin(0, 0);
