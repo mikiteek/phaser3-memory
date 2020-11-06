@@ -29,7 +29,23 @@ export class GameScene extends Phaser.Scene {
   create() {
     this.createBackground();
     this.createCards();
+    this.start();
+  }
+
+  start() {
     this.openedCard = null;
+    this.openedCardsCount = 0;
+    this.initCards();
+  }
+
+  initCards() {
+    const positions = this.getCardsPositions();
+
+    this.cards.forEach(card => {
+      const position = positions.pop();
+      card.close();
+      card.setPosition(position.x, position.y);
+    });
   }
 
   createBackground() {
@@ -39,13 +55,10 @@ export class GameScene extends Phaser.Scene {
 
   createCards() {
     this.cards = [];
-    const positions = this.getCardsPositions();
-    // shuffling cards
-    Phaser.Utils.Array.Shuffle(positions);
 
     config.cards.forEach(value => {
       for (let i = 0; i < 2; i++) {
-        this.cards.push(new Card(this, value, positions.pop()));
+        this.cards.push(new Card(this, value));
       }
     });
     // handle event click
@@ -61,6 +74,7 @@ export class GameScene extends Phaser.Scene {
       if (this.openedCard.value === card.value) {
         // remember card
         this.openedCard = null;
+        ++this.openedCardsCount;
       }
       else {
         // hidden prev
@@ -73,6 +87,9 @@ export class GameScene extends Phaser.Scene {
       this.openedCard = card;
     }
     card.open();
+     if (this.openedCardsCount === this.cards.length / 2) {
+       this.start();
+     }
   }
 
   getCardsPositions() {
@@ -93,6 +110,6 @@ export class GameScene extends Phaser.Scene {
         });
       }
     }
-    return positions;
+    return Phaser.Utils.Array.Shuffle(positions); // shuffling cards
   }
 }
